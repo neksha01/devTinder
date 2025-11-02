@@ -42,7 +42,7 @@ const userSchema=new mongoose.Schema({
         default:"https://smsdelhibmw.co.in/wp-content/uploads/2022/02/User-Profile-PNG.png"
     },
     skills:{
-        type:[String]
+        type:[String],
     }
 },{
     timestamps:true

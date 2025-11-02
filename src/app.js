@@ -62,17 +62,28 @@ app.get("/feed",async(req,res)=>{
 })
 
 // patch user API - updating the data of user
-app.patch("/user", async (req, res) => {
-    const userId = req.body.userId;
+app.patch("/user/:userId", async (req, res) => {
+    const userId = req.params.userId;
     const data = req.body;
 
-    try {
+ try {
+    const ALLOWED_UPDATES=[
+    "photoUrl","age","password","skills","about"
+];
+
+const isUpdateAllowed=Object.keys(data).every((k)=>ALLOWED_UPDATES.includes(k));
+if(!isUpdateAllowed){
+    throw new Error("Update not Allowed")
+}
+if(data?.skills.length>3){
+    throw new Error("skills should not be more than 3")
+}
         const user = await User.findByIdAndUpdate({ _id: userId }, data);
         console.log(user)
         res.send("User updated successfully")
 
     } catch (err) {
-        res.status(400).send("Something went wrong")
+        res.status(400).send("Update Failed:"+err.message)
     }
 })
 
