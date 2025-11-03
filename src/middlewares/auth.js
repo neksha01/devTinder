@@ -1,28 +1,28 @@
-const adminAuth=(req,res,next)=>{
-    console.log("Admin auth ");
-    const token="xyz";
-    const isAdminAuthorized= token==="xyz";
-    if(!isAdminAuthorized){
-        res.status(401).send("Unauthorized admin");
-    }  
-    else{
-        next();
-    }
-}
+const jwt=require("jsonwebtoken")
+const User=require("../models/user")
 
-const userAuth=(req,res,next)=>{
-    console.log("User auth ");
-    const token="xy";
-    const isUserAuthorized= token==="xyz";
-    if(!isUserAuthorized){
-        res.status(401).send("Unauthorized user");
-    }  
-    else{
-        next();
+const userAuth=async(req,res,next)=>{
+    try{
+        const {token}=req.cookies;
+
+        if(!token){
+        throw new Error("Invalid Token")
+    }
+    const decodedData=await jwt.verify(token,"DEV@TINDER09")
+    const{_id}=decodedData
+
+    const user=await User.findById(_id);
+    if (!user) {
+            throw new Error("User Not Found")
+        }
+
+    req.user=user;
+
+    }catch(err){
+        res.status(400).send("Error: "+ err.message);
     }
 }
 
 module.exports={
-    adminAuth,
     userAuth
 }
