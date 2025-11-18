@@ -5,7 +5,7 @@ const User = require("../models/user");
 
 const userRouter=express.Router();
 
-const USER_SAFE_DATA="firstName lastName age gender about";
+const USER_SAFE_DATA="firstName lastName age gender about photoURL skills";
 
 userRouter.get("/user/requests/received",userAuth,async(req,res)=>{
     try{
