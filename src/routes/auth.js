@@ -33,6 +33,7 @@ authRouter.post("/signup", async (req, res) => {
   httpOnly: true,
   secure: false,       // must be false on localhost
   sameSite: "lax",     // required for cross-origin cookies
+  path:"/",
   maxAge: 8 * 3600000, // same as 8 hours
 });
 
@@ -64,6 +65,7 @@ authRouter.post("/login", async (req, res) => {
   httpOnly: true,
   secure: false,       // must be false on localhost
   sameSite: "lax",     // required for cross-origin cookies
+   path:"/",
   maxAge: 8 * 3600000, // same as 8 hours
 });
       res.send(user);
