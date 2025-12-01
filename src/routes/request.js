@@ -6,7 +6,7 @@ const User=require("../models/user")
 const requestRouter=express.Router();
 
 
-requestRouter.post("/request/send/:status/:userId",userAuth,async(req,res)=>{
+requestRouter.post("/send/:status/:userId",userAuth,async(req,res)=>{
     try{
 
    const fromUserId=req.user._id;
